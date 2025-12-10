@@ -1,15 +1,30 @@
 import pandas as pd
+import joblib
+
+
+# ===============   
+# UJI COBA
+# ===============
 
 sample = {
     'arus': 0.15,
     'voltase': 230.5,
-    'daya': 20.0,
+    'daya': 0.60,
     'frekuensi': 49.95,
-    'suhu_dalam': 20.5,
-    'suhu_luar': 23.0,
-    'prakiraan_suhu_luar': 35.0
+    'suhu_dalam': 18.5,
+    'suhu_luar': 30.0,
+    'prakiraan_suhu_luar': 55.0
 }
 
+clf = joblib.load('./model/model_rtos.pkl')
+
+# print sample
+print("\nContoh Sampel:")
+for k, v in sample.items():
+    print(f"{k}: {v}")
+
+
+print("\nContoh Prediksi:")
 
 df_sample = pd.DataFrame([sample])
 

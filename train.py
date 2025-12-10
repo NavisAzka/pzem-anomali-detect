@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import joblib
 
 # 1. Muat data
-df = pd.read_csv('tes.csv')
+df = pd.read_csv('./data/dataset.csv')
 
 # 2. Drop kolom timestamp
 df = df.drop(columns=['timestamp'])
@@ -15,8 +15,7 @@ X = df.drop(columns=['label_anomali'])
 y = df['label_anomali']
 
 # 4. Bagi data latih/tes (70%/30%)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
 # 5. Latih model Random Forest
 clf = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -42,11 +41,14 @@ result['Label_Aktual'] = y_test.values
 result['Prediksi'] = y_pred
 # print(result.head())
 
-joblib.dump(clf, 'model_rtos.pkl')
+# 8. Simpan model
+time_now = pd.Timestamp.now().strftime("%d-%m-%Y_%H:%M:%S")
+path_model = f'./model/model_rtos_{time_now}.pkl'
+joblib.dump(clf, path_model)
+print("Model disimpan di:", path_model)
+
 
 # saat runtime
-# clf = joblib.load('model_rtos.pkl')
-
 
 # ===============   
 # UJI COBA
@@ -62,6 +64,7 @@ sample = {
     'prakiraan_suhu_luar': 55.0
 }
 
+# clf = joblib.load('model_rtos.pkl')
 
 # print sample
 print("\nContoh Sampel:")
