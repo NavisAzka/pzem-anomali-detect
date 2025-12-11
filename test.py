@@ -1,32 +1,25 @@
-import pandas as pd
-import joblib
+from inference import run_inference   
 
-
-# ===============   
-# UJI COBA
-# ===============
-
-sample = {
-    'arus': 0.15,
+data = {
+    'arus': 2.15,
     'voltase': 230.5,
-    'daya': 0.60,
+    'daya': 643.60,
     'frekuensi': 49.95,
-    'suhu_dalam': 18.5,
-    'suhu_luar': 30.0,
-    'prakiraan_suhu_luar': 55.0
+    'suhu_dalam': 36.5,
+    'suhu_luar': 35.0,
+    'prakiraan_suhu_luar': 12.0
 }
 
-clf = joblib.load('./model/model_rtos.pkl')
-
 # print sample
-print("\nContoh Sampel:")
-for k, v in sample.items():
+print("Contoh Sampel:")
+for k, v in data.items():
     print(f"{k}: {v}")
 
 
-print("\nContoh Prediksi:")
 
-df_sample = pd.DataFrame([sample])
-
-pred = clf.predict(df_sample)[0]
-print("Anomali" if pred == 1 else "Normal")
+pred = run_inference(data)
+status = "Anomali" if pred == 1 else "Normal"
+print({
+    "prediction": int(pred),
+    "status": status
+})

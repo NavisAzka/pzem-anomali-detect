@@ -2,7 +2,8 @@ import requests
 import random
 import time
 
-URL = "http://192.168.200.118:1880/sensor"  # ganti sesuai endpoint kamu
+# URL = "http://192.168.200.118:1880/sensor"  # ganti sesuai endpoint kamu
+URL = "http://localhost:1880/sensor"  # ganti sesuai endpoint kamu
 
 while True:
     data_dummy = {

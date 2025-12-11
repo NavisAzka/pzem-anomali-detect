@@ -5,10 +5,17 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import joblib
 
 # 1. Muat data
-df = pd.read_csv('./data/dataset.csv')
+df = pd.read_csv('./data/dataset_baru.csv')
 
 # 2. Drop kolom timestamp
 df = df.drop(columns=['timestamp'])
+
+# Hapus kolom non-feature (index CSV atau deskripsi)
+df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+
+# Buang kolom non-numerik jika ada
+if 'keterangan' in df.columns:
+    df = df.drop(columns=['keterangan'])
 
 # 3. Pisahkan fitur dan label
 X = df.drop(columns=['label_anomali'])
